@@ -6,5 +6,23 @@
   "repository": "git@github.com:henry0hai/propine-assignment.git",
   "author": "henry0hai <henry0hai@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "event-stream": "^4.0.1",
+    "moment": "^2.29.1",
+    "ora": "^6.0.1"
+  },
+  "devDependencies": {
+    "boxen": "^6.2.1",
+    "chalk": "^5.0.0",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "inquirer": "^8.2.0",
+    "path": "^0.12.7"
+  }
 }
