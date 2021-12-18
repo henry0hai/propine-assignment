@@ -1,0 +1,10 @@
+{
+  "name": "propine-assignment",
+  "version": "1.0.0",
+  "description": "Propine Blockchain Engineer Assignment",
+  "main": "main.js",
+  "repository": "git@github.com:henry0hai/propine-assignment.git",
+  "author": "henry0hai <henry0hai@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
