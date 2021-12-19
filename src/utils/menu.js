@@ -3,8 +3,8 @@ import inquirer from 'inquirer';
 
 import { createBox, logWithColor } from './color.js';
 import { getTransaction } from '../services/transaction.js';
-import { DATE_TIME_FORMAT } from '../constants/constants.js';
-import { GET_TOKEN, GET_DATE, GET_TOKEN_DATE } from '../constants/constants.js';
+import { DATE_TIME_FORMAT, GET_TOKEN, GET_DATE, GET_TOKEN_DATE } from '../constants/constants.js';
+import { isDateValidate } from './time-convert.js';
 
 const menus = [
   {
@@ -22,11 +22,10 @@ const menus = [
 ];
 
 const dateValidate = async (input) => {
-  const regex = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/;
-  if (!input.match(regex)) {
-    return `Please input correct date format (${DATE_TIME_FORMAT})`;
+  if (isDateValidate(input)) {
+    return true;
   }
-  return true;
+  return `Please input correct date format (${DATE_TIME_FORMAT})`;
 };
 
 const defaultQuestion = {

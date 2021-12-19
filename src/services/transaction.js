@@ -6,6 +6,7 @@ import { getLines } from './read-file.js';
 import parseContent from './parse-content.js';
 import { GET_TOKEN, GET_DATE, GET_TOKEN_DATE } from '../constants/constants.js';
 import { getBeginEndDate, compareDateIsAfter, compareDateIsBefore } from '../utils/time-convert.js';
+import { transformPortfoliosGetPrice } from '../api/currency.js';
 
 dotenv.config();
 const csvHeader = process.env.CSV_HAS_HEADER;
@@ -107,31 +108,36 @@ export const getTransaction = (key, value) => {
       .on('data', (trans) => {
         getPortfolio(trans.type, trans.token, trans.amount);
       })
-      .on('end', (options) => {
+      .on('end', async (options) => {
         let results = Object.keys(sum).map((token) => ({ token, balance: Number(sum[token]).toFixed(6) }));
         if (results.length === 0) {
           createNewPortfolio(options.value.inputToken);
         }
         resetValue(); // reset initial values
+        let response = undefined;
         switch (options.key) {
           case GET_TOKEN:
             if (results.length === 0) {
               results.push(createNewPortfolio(options.value.inputToken));
             }
-            resolve(results[0]);
-            return results[0];
+            response = await transformPortfoliosGetPrice(results[0]);
+            resolve(response);
+            return response;
           case GET_DATE:
-            resolve(results);
-            return results;
+            response = await transformPortfoliosGetPrice(results);
+            resolve(response);
+            return response;
           case GET_TOKEN_DATE:
             if (results.length === 0) {
               results.push(createNewPortfolio(options.value.inputToken));
             }
-            resolve(results[0]);
-            return results[0];
+            response = await transformPortfoliosGetPrice(results[0]);
+            resolve(response);
+            return response;
           default:
-            resolve(results);
-            return results;
+            response = await transformPortfoliosGetPrice(results);
+            resolve(response);
+            return response;
         }
       })
       .on('error', (e) => {
