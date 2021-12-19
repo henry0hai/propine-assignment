@@ -2,11 +2,10 @@ import events from 'events';
 import dotenv from 'dotenv';
 import es from 'event-stream';
 
-import { getLines } from './read-file.js';
 import parseContent from './parse-content.js';
+import { transformPortfoliosGetPrice } from '../api/currency.js';
 import { GET_TOKEN, GET_DATE, GET_TOKEN_DATE } from '../constants/constants.js';
 import { getBeginEndDate, compareDateIsAfter, compareDateIsBefore } from '../utils/time-convert.js';
-import { transformPortfoliosGetPrice } from '../api/currency.js';
 
 dotenv.config();
 const csvHeader = process.env.CSV_HAS_HEADER;
@@ -102,9 +101,9 @@ const getPortfolio = (type, token, amount) => {
   return sum;
 };
 
-export const getTransaction = (key, value) => {
+export const getTransaction = (lines, key, value) => {
   return new Promise((resolve, reject) => {
-    return transaction(getLines(), { key, value })
+    return transaction(lines, { key, value })
       .on('data', (trans) => {
         getPortfolio(trans.type, trans.token, trans.amount);
       })

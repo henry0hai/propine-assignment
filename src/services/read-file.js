@@ -10,6 +10,9 @@ const fileName = process.env.FILE_NAME;
 
 const filePath = path.join(fileDir, fileName);
 
-export const getLines = () => {
+export const getLines = (path) => {
+  if (path) {
+    return fs.createReadStream(path).pipe(es.split());
+  }
   return fs.createReadStream(filePath).pipe(es.split());
 };

@@ -1,22 +1,18 @@
 import assert from 'assert';
 import path from 'path';
 
+import { getLines } from '../src/services/read-file.js';
 import { getTransaction } from '../src/services/transaction.js';
 
-// process.env.FILE_DIR=/home/henry0hai/Downloads
-process.env.NODE_ENV = 'test';
-process.env.FILE_NAME = "transactions-100.csv"
-// process.env.CSV_HAS_HEADER=true
-const fileDir = path.join(process.cwd(), '/mocks');
-process.env.FILE_DIR = fileDir;
+const fileName = "transactions-100.csv"
+const fileDir = path.join(process.cwd(), '/test/mocks', fileName);
 
 describe('Color Code Converter', () => {
   describe('RGB to Hex conversion', () => {
     it('converts the basic colors', () => {
-      getTransaction().then(() => {
-        console.log(process.env.FILE_DIR);
-       
-     })
+      getTransaction(getLines(fileDir)).then((result) => {
+        console.log("🚀 ~ file: temp.test.js ~ line 15 ~ getTransaction ~ result", result)
+      });
     });
   });
 

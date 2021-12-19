@@ -1,10 +1,12 @@
 import ora from 'ora';
 import inquirer from 'inquirer';
 
+import { isDateValidate } from './time-convert.js';
+import { getLines } from '../services/read-file.js';
 import { createBox, logWithColor } from './color.js';
 import { getTransaction } from '../services/transaction.js';
 import { DATE_TIME_FORMAT, GET_TOKEN, GET_DATE, GET_TOKEN_DATE } from '../constants/constants.js';
-import { isDateValidate } from './time-convert.js';
+
 
 const menus = [
   {
@@ -34,7 +36,7 @@ const defaultQuestion = {
   message: 'Are you sure? (Y/n)',
   filter: async (answer) => {
     if (answer.length === 0 || answer.toLowerCase() === 'y' || answer.toLowerCase() === 'yes') {
-      return JSON.stringify(await getTransaction());
+      return JSON.stringify(await getTransaction(getLines()));
     }
   },
   filteringText: 'Get Result:...',
@@ -45,7 +47,7 @@ const tokenQuestion = {
   name: 'token',
   message: 'Input a token (BTC, ETH,...):',
   filter: async (answer) => {
-    return JSON.stringify(await getTransaction(GET_TOKEN, { inputToken: answer.toUpperCase() }));
+    return JSON.stringify(await getTransaction(getLines(), GET_TOKEN, { inputToken: answer.toUpperCase() }));
   },
   filteringText: 'Get Result:...',
 };
@@ -92,7 +94,7 @@ const initMenu = () => {
         inquirer.prompt([dateQuestion]).then(async (answer) => {
           const inputDate = answer.date;
           const spinner = ora('Get Result:...').start();
-          const result = await getTransaction(GET_DATE, { inputDate });
+          const result = await getTransaction(getLines(), GET_DATE, { inputDate });
           spinner.stop();
           console.log('🚀 ~ result: ', result);
           initMenu();
@@ -103,7 +105,7 @@ const initMenu = () => {
           const inputToken = answer.token.toUpperCase();
           const inputDate = answer.date;
           const spinner = ora('Get Result:...').start();
-          const result = await getTransaction(GET_TOKEN_DATE, { inputToken, inputDate });
+          const result = await getTransaction(getLines(), GET_TOKEN_DATE, { inputToken, inputDate });
           spinner.stop();
           console.log('🚀 ~ result: ', result);
           initMenu();
