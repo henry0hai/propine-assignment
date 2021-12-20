@@ -116,10 +116,15 @@ export const getTransaction = (lines, key, value) => {
         let response = undefined;
         switch (options.key) {
           case GET_TOKEN:
-            if (results.length === 0) {
-              results.push(createNewPortfolio(options.value.inputToken));
+            if (options.value.inputToken) {
+              if (results.length === 0) {
+                results.push(createNewPortfolio(options.value.inputToken));
+              }
+              response = await transformPortfoliosGetPrice(results[0]);
+              resolve(response);
+              return response;
             }
-            response = await transformPortfoliosGetPrice(results[0]);
+            response = {};
             resolve(response);
             return response;
           case GET_DATE:

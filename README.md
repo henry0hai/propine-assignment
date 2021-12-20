@@ -18,6 +18,12 @@ yarn
 node .
 ```
 
+- For unit test run by 
+
+```sh
+yarn test
+```
+
 ## Project directories
 
 ```txt
@@ -38,10 +44,19 @@ node .
 │      ├── color.js
 │      ├── menu.js
 │      └── time-convert.js
+├── test
+│   ├── init-chai.js
+│   ├── mocks
+│      └── transactions-100.csv
+│   ├── transaction.test.js
+│   └── time-convert.test.js
 └── .default.env
 ```
 
 ## Thing need to improve
 
-- Handle multi thread to improve processing large data from parse file to get some object transformation
+- Speed up processing large data from parse file to get some object transformation
+  - Apply thread, child process while processing data
+  - Snapshot while reading (by time range) => using redis cached and from now, read from cache
 
+- Update unit test to covert all functions and missing case

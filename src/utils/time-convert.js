@@ -5,10 +5,14 @@ import { DATE_TIME_FORMAT } from '../constants/constants.js';
 const regexDateFormatMMDDYYYY = /^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-\d{4}$/; //MM-DD-YYYY
 
 export const isDateValidate = (inputDate) => {
-   if (!inputDate.match(regexDateFormatMMDDYYYY)) {
-     return false;
-   }
-  return true;
+  try {
+    if (!inputDate.match(regexDateFormatMMDDYYYY)) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 export const getBeginEndDate = (inputDate) => {

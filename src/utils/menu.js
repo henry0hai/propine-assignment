@@ -47,7 +47,11 @@ const tokenQuestion = {
   name: 'token',
   message: 'Input a token (BTC, ETH,...):',
   filter: async (answer) => {
-    return JSON.stringify(await getTransaction(getLines(), GET_TOKEN, { inputToken: answer.toUpperCase() }));
+    if (answer) {
+
+      return JSON.stringify(await getTransaction(getLines(), GET_TOKEN, { inputToken: answer.toUpperCase() }));
+    }
+    return 'Token should not be empty';
   },
   filteringText: 'Get Result:...',
 };
