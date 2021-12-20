@@ -18,7 +18,7 @@ yarn
 node .
 ```
 
-- For unit test run by 
+- For unit test run by
 
 ```sh
 yarn test
