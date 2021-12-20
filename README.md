@@ -59,4 +59,4 @@ yarn test
   - Apply thread, child process while processing data
   - Snapshot while reading (by time range) => using redis cached and from now, read from cache
 
-- Update unit test to covert all functions and missing case
+- Update unit test to cover all functions and missing case
